@@ -40,9 +40,7 @@ public class Personne {
         return sexe;
     }
 
-    public int getDeptNaissance() {
-        return deptNaissance;
-    }
+    public int getDeptNaissance() { return deptNaissance; }
 
     public void setNom(String nom) {
         this.nom = nom;
@@ -52,7 +50,10 @@ public class Personne {
         this.prenom = prenom;
     }
 
-    public void setNumSecu(String numSecu) {
+    public void setNumSecu(String numSecu) throws NumeroSecuriteSocialeInvalideException {
+        if(numSecu.length() < 13)
+            throw new NumeroSecuriteSocialeInvalideException();
+
         this.numSecu = numSecu;
 
         this.sexe();
@@ -73,7 +74,11 @@ public class Personne {
     }
 
     private void anneeNaissance(){
-        this.anneeNaissance = 1900+Integer.parseInt(numSecu.substring(1,3));
+        int annee = Integer.parseInt(numSecu.substring(1,3));
+        if(annee > 20)
+            this.anneeNaissance = 1900+annee;
+        else
+            this.anneeNaissance = 2000+annee;
     }
 
     private void sexe(){
