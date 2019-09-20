@@ -17,4 +17,9 @@ public class Electromenager extends Article implements IVendrePiece, IPublicite 
     public float getPrixUnitaire() {
         return prixUnitaire;
     }
+
+    @Override
+    public void presentoir() {
+        System.out.println(this.nom+" | "+this.prixUnitaire+"€");
+    }
 }

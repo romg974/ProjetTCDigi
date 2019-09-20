@@ -2,10 +2,12 @@ package com.company.vente;
 
 public class Primeur extends Article implements IVendreKilo, IPublicite, ISolde {
     float prixAuGramme;
-    int remise;
+    float remise;
 
-    public Primeur(String nom) {
+    public Primeur(String nom, float prixAuGramme, float remise) {
         super(nom);
+        this.prixAuGramme = prixAuGramme;
+        this.remise = remise;
     }
 
     public String getMessagePublicitaire() {
@@ -18,5 +20,17 @@ public class Primeur extends Article implements IVendreKilo, IPublicite, ISolde 
 
     public float getPrixAuKilo() {
         return prixAuGramme*1000*(1-remise/100);
+    }
+
+    @Override
+    public void setRemisePourcent(float remise) throws PasEntre0et100Exception {
+        if(remise < 0 || remise > 100)
+            throw new PasEntre0et100Exception();
+        this.remise = remise;
+    }
+
+    @Override
+    public void presentoir() {
+        System.out.println(this.nom+" | "+this.getPrixAuKilo()+"€/kg");
     }
 }
