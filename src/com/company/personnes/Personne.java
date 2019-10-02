@@ -14,7 +14,7 @@ public class Personne {
         this.nom = nom;
         this.prenom = prenom;
 
-        if(numSecu.length() < 13)
+        if(numSecu.length() != 13)
             throw new NumeroSecuriteSocialeInvalideException();
         this.numSecu = numSecu;
 
@@ -54,7 +54,7 @@ public class Personne {
     }
 
     public void setNumSecu(String numSecu) throws NumeroSecuriteSocialeInvalideException {
-        if(numSecu.length() < 13)
+        if(numSecu.length() != 13)
             throw new NumeroSecuriteSocialeInvalideException();
 
         this.numSecu = numSecu;
