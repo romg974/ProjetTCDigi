@@ -10,9 +10,12 @@ public class Personne {
     private char sexe = 'N';
     private int deptNaissance;
 
-    public Personne(String nom, String prenom, String numSecu) {
+    public Personne(String nom, String prenom, String numSecu) throws NumeroSecuriteSocialeInvalideException {
         this.nom = nom;
         this.prenom = prenom;
+
+        if(numSecu.length() < 13)
+            throw new NumeroSecuriteSocialeInvalideException();
         this.numSecu = numSecu;
 
         this.sexe();
