@@ -9,6 +9,7 @@ public class Personne {
     private int anneeNaissance;
     private char sexe = 'N';
     private int deptNaissance;
+    private String adresse;
 
     public Personne(String nom, String prenom, String numSecu) throws NumeroSecuriteSocialeInvalideException {
         this.nom = nom;
@@ -17,6 +18,21 @@ public class Personne {
         if(numSecu.length() != 13)
             throw new NumeroSecuriteSocialeInvalideException();
         this.numSecu = numSecu;
+
+        this.sexe();
+        this.deptNaissance();
+        this.anneeNaissance();
+    }
+
+    public Personne(String nom, String prenom, String numSecu, String adresse) throws NumeroSecuriteSocialeInvalideException {
+        this.nom = nom;
+        this.prenom = prenom;
+
+        if(numSecu.length() != 13)
+            throw new NumeroSecuriteSocialeInvalideException();
+        this.numSecu = numSecu;
+
+        this.adresse = adresse;
 
         this.sexe();
         this.deptNaissance();
@@ -45,6 +61,10 @@ public class Personne {
 
     public int getDeptNaissance() { return deptNaissance; }
 
+    public String getAdresse() {
+        return adresse;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -64,11 +84,16 @@ public class Personne {
         this.anneeNaissance();
     }
 
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
     @Override
     public String toString() {
         return "Personne{" +
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
+                (adresse.isEmpty() ? "" : ", adresse=" + adresse) +
                 ", numSecu='" + numSecu + '\'' +
                 (anneeNaissance != 0 ? ", anneeNaissance=" + anneeNaissance : "") +
                 (sexe != 'N' ? ", sexe=" + sexe : "") +
