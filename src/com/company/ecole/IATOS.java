@@ -1,11 +1,22 @@
 package com.company.ecole;
 
+import com.company.personnes.NumeroSecuriteSocialeInvalideException;
+
 public class IATOS extends Personnel {
     private int salaireFixe;
     private int tauxVariable;
     private int heuresSupp;
 
-    public IATOS(int salaireFixe, int tauxVariable) {
+    public IATOS(String nom, String prenom, String numSecu, String date_entree, int temps_travail, int salaireFixe, int tauxVariable) throws NumeroSecuriteSocialeInvalideException, TempsDeTravailException {
+        super(nom, prenom, numSecu, date_entree, temps_travail);
+
+        this.salaireFixe = salaireFixe;
+        this.tauxVariable = tauxVariable;
+    }
+
+    public IATOS(String nom, String prenom, String numSecu, String adresse, String date_entree, int temps_travail, int salaireFixe, int tauxVariable) throws NumeroSecuriteSocialeInvalideException, TempsDeTravailException {
+        super(nom, prenom, numSecu, adresse, date_entree, temps_travail);
+
         this.salaireFixe = salaireFixe;
         this.tauxVariable = tauxVariable;
     }
