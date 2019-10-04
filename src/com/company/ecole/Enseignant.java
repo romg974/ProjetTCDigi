@@ -13,13 +13,13 @@ public class Enseignant extends Personnel {
 
     private static int prime = 500;
     private static Map<String, Integer> fixe = new HashMap<>(){{
-        //add the elements to the created hastable
+        //add the elements to the hastable
         put("PROF", 1000);
         put("MDC", 2000);
         put("PRAG", 4000);
     }};
     private static final Map<String, Integer> service = new HashMap<>() {{
-        //add the elements to the created hastable
+        //add the elements to the hastable
         put("PROF", 192/2);
         put("MDC", 192);
         put("PRAG", 192*2);
