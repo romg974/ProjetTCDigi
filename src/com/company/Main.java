@@ -36,6 +36,7 @@ public class Main {
         magasin.addArticle(p0, 5);
         magasin.addArticle(e0, 10);
         magasin.addArticle(h0, 20);
+        magasin.setCaisse(1000);
 
         System.out.println(magasin);
 
@@ -83,5 +84,12 @@ public class Main {
             e.printStackTrace();
         }
 
+        try {
+            magasin.debuterSolde(30, p0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(magasin);
     }
 }

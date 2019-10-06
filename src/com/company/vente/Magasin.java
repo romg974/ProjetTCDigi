@@ -3,8 +3,10 @@ package com.company.vente;
 import com.company.compteBancaire.CompteBanque;
 import com.company.personnes.Personne;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Set;
 
 public class Magasin {
     private String nom;
@@ -12,6 +14,7 @@ public class Magasin {
     private int nbVendeurs;
     private Hashtable<Article, Integer> stocks;
     private ArrayList<Ticket> ventes;
+    private int caisse;
 
     public Magasin(String nom, String adresse, int nbVendeurs) {
         this.nom = nom;
@@ -41,6 +44,14 @@ public class Magasin {
         return ventes;
     }
 
+    public int getCaisse() {
+        return caisse;
+    }
+
+    public void setCaisse(int caisse) {
+        this.caisse = caisse;
+    }
+
     public void setAdresse(String adresse) {
         this.adresse = adresse;
     }
@@ -67,8 +78,26 @@ public class Magasin {
                 "nom='" + nom + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", nbVendeurs=" + nbVendeurs +
-                ", stocks=" + stocks +
-                '}';
+                ", stocks=" + this.afficheStock() +
+                ", caisse=" + this.caisse +
+                "€}";
+    }
+
+    private String afficheStock() {
+        StringBuilder res = new StringBuilder("{");
+        boolean first = true;
+        for (Article art : this.stocks.keySet()) {
+            if (!first) {
+                res.append(", ");
+            } else {
+                first = false;
+            }
+            res.append(art.getNom());
+            res.append(":");
+            res.append(this.stocks.get(art));
+            res.append("€");
+        }
+        return res.append("}").toString();
     }
 
     public Ticket achete(Personne personne, Article art, String code) throws AchatException{
@@ -97,7 +126,10 @@ public class Magasin {
             throw new AchatException(e.getMessage());
         }
 
+        this.caisse += prix;
+
         Ticket ticket = new Ticket(this, personne, art, prix);
+
         stocks.put(art, stock-1);
         ventes.add(ticket);
 
@@ -120,5 +152,15 @@ public class Magasin {
 
         ventes.remove(ticket);
         stocks.put(ticket.getArticle(), stocks.get(ticket.getArticle())+1);
+    }
+
+    public void debuterSolde(float remise, Article article) throws PasEntre0et100Exception {
+        if (!this.stocks.containsKey(article))
+            throw new InvalidParameterException("Ce magasin ne possede pas cet article");
+
+        if (!(article instanceof ISolde))
+            throw new InvalidParameterException("Cet article ne peut pas être mis en solde");
+
+        ((ISolde) article).setRemisePourcent(remise);
     }
 }

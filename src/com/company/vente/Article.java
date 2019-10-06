@@ -7,6 +7,10 @@ public abstract class Article {
         this.nom = nom;
     }
 
+    public String getNom() {
+        return this.nom;
+    }
+
     abstract public void presentoir();
     abstract public float getPrixUnitaire();
 }
