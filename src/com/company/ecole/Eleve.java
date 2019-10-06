@@ -1,5 +1,6 @@
 package com.company.ecole;
 
+import com.company.personnes.NumeroSecuriteSocialeInvalideException;
 import com.company.personnes.Personne;
 
 public class Eleve extends Personne {
@@ -7,7 +8,7 @@ public class Eleve extends Personne {
     private int promo;
     private int annee;
 
-    public Eleve(String nom, String prenom, String numSecu, String ine, int promo, int annee) {
+    public Eleve(String nom, String prenom, String numSecu, String ine, int promo, int annee) throws NumeroSecuriteSocialeInvalideException {
         super(nom, prenom, numSecu);
         this.ine = ine;
         this.promo = promo;
