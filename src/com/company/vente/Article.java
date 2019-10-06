@@ -8,4 +8,5 @@ public abstract class Article {
     }
 
     abstract public void presentoir();
+    abstract public float getPrixUnitaire();
 }

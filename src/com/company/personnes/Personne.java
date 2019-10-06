@@ -1,5 +1,7 @@
 package com.company.personnes;
 
+import com.company.compteBancaire.CompteBanque;
+
 import java.util.Calendar;
 
 public class Personne {
@@ -10,6 +12,7 @@ public class Personne {
     private char sexe = 'N';
     private int deptNaissance;
     private String adresse;
+    private CompteBanque compte;
 
     public Personne(String nom, String prenom, String numSecu) throws NumeroSecuriteSocialeInvalideException {
         this.nom = nom;
@@ -37,6 +40,14 @@ public class Personne {
         this.sexe();
         this.deptNaissance();
         this.anneeNaissance();
+    }
+
+    public CompteBanque getCompte() {
+        return compte;
+    }
+
+    public void setCompte(CompteBanque compte) {
+        this.compte = compte;
     }
 
     public String getNom() {
@@ -93,7 +104,7 @@ public class Personne {
         return "Personne{" +
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
-                (adresse.isEmpty() ? "" : ", adresse=" + adresse) +
+                (adresse == null || adresse.isEmpty() ? "" : ", adresse=" + adresse) +
                 ", numSecu='" + numSecu + '\'' +
                 (anneeNaissance != 0 ? ", anneeNaissance=" + anneeNaissance : "") +
                 (sexe != 'N' ? ", sexe=" + sexe : "") +

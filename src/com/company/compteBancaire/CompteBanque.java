@@ -18,6 +18,7 @@ public class CompteBanque {
         this.code2 = code2;
         this.solde = 0;
         this.decouvertAutorise = 0;
+        client.setCompte(this);
     }
 
     public String getNum() {
