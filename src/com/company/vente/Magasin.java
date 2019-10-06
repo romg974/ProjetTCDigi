@@ -72,6 +72,10 @@ public class Magasin {
             throw new AchatException("Cet article n'est pas disponible");
         }
 
+        if (personne.calculAge() <= 10) {
+            throw new AchatException("Une personne de moins de 10 ans ne peut pas faire d'achat");
+        }
+
         int stock = stocks.get(art);
 
         if(stock <= 0){
