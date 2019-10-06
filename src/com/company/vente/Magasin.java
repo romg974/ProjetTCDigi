@@ -185,6 +185,8 @@ public class Magasin {
             // Ceci ne peut normalement pas arriver
         }
 
+        this.caisse -= ticket.getMontant();
+
         ventes.remove(ticket);
         stocks.put(ticket.getArticle(), stocks.get(ticket.getArticle())+1);
     }
