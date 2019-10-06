@@ -5,7 +5,11 @@ import com.company.ecole.EchelonException;
 import com.company.ecole.Enseignant;
 import com.company.ecole.TempsDeTravailException;
 import com.company.personnes.NumeroSecuriteSocialeInvalideException;
+import com.company.personnes.Personne;
 import com.company.vente.*;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Main {
 
@@ -91,5 +95,36 @@ public class Main {
         }
 
         System.out.println(magasin);
+
+        try {
+            ens.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Personne pclone = new Personne("out/Jean_Loutre.personne");
+            System.out.println(ens);
+            System.out.println(ens.getCompte());
+            System.out.println(pclone);
+            System.out.println(pclone.getCompte());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            magasin.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Magasin mclone = new Magasin("out/Chez René.magasin");
+            System.out.println(magasin);
+            System.out.println(mclone);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

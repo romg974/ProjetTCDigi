@@ -4,9 +4,10 @@ import com.company.personnes.Personne;
 import com.company.vente.Magasin;
 import com.company.vente.Ticket;
 
+import java.io.Serializable;
 import java.security.InvalidParameterException;
 
-public class CompteBanque {
+public class CompteBanque implements Serializable {
     private String num;
     private Personne client;
     private float solde;

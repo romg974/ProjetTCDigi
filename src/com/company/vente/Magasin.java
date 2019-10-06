@@ -3,6 +3,7 @@ package com.company.vente;
 import com.company.compteBancaire.CompteBanque;
 import com.company.personnes.Personne;
 
+import java.io.*;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -20,8 +21,42 @@ public class Magasin {
         this.nom = nom;
         this.adresse = adresse;
         this.nbVendeurs = nbVendeurs;
-        stocks = new Hashtable<>();
-        ventes = new ArrayList<>();
+        this.stocks = new Hashtable<>();
+        this.ventes = new ArrayList<>();
+    }
+
+    public Magasin(String file) throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        try {
+            this.nom = (String) ois.readObject();
+            this.adresse = (String) ois.readObject();
+            this.nbVendeurs = (int) ois.readObject();
+            this.caisse = (int) ois.readObject();
+
+            Article art;
+            int q;
+            this.stocks = new Hashtable<>();
+            int m = (int) ois.readObject();
+            for (int i = 0; i < m; i++) {
+                art = (Article) ois.readObject();
+                q = (int) ois.readObject();
+                this.stocks.put(art, q);
+            }
+
+            this.ventes = new ArrayList<>();
+            m = (int) ois.readObject();
+            for (int i = 0; i < m; i++) {
+                this.ventes.add((Ticket) ois.readObject());
+            }
+
+            } catch (ClassNotFoundException e) {
+            throw new IOException("Wrong stack format.");
+        }
+
+        ois.close();
+        fis.close();
     }
 
     public String getNom() {
@@ -162,5 +197,31 @@ public class Magasin {
             throw new InvalidParameterException("Cet article ne peut pas être mis en solde");
 
         ((ISolde) article).setRemisePourcent(remise);
+    }
+
+    public void save() throws IOException {
+        File file = new File("out/" +this.nom + ".magasin");
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(this.nom);
+        oos.writeObject(this.adresse);
+        oos.writeObject(this.nbVendeurs);
+        oos.writeObject(this.caisse);
+
+        oos.writeObject(this.stocks.keySet().size());
+        for (Article art : this.stocks.keySet()) {
+            oos.writeObject(art);
+            oos.writeObject(this.stocks.get(art));
+        }
+
+        oos.writeObject(this.ventes.size());
+        for(Ticket ticket : this.ventes) {
+            oos.writeObject(ticket);
+        }
+
+        oos.flush();
+        oos.close();
+        fos.close();
     }
 }

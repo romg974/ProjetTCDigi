@@ -1,6 +1,8 @@
 package com.company.vente;
 
-public abstract class Article {
+import java.io.Serializable;
+
+public abstract class Article implements Serializable {
     protected String nom;
 
     public Article(String nom) {

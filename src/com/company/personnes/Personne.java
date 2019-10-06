@@ -2,9 +2,10 @@ package com.company.personnes;
 
 import com.company.compteBancaire.CompteBanque;
 
+import java.io.*;
 import java.util.Calendar;
 
-public class Personne {
+public class Personne implements Serializable {
     private String nom;
     private String prenom;
     private String numSecu;
@@ -40,6 +41,30 @@ public class Personne {
         this.sexe();
         this.deptNaissance();
         this.anneeNaissance();
+    }
+
+    public Personne(String file) throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        try
+        {
+            this.nom = (String) ois.readObject();
+            this.prenom = (String) ois.readObject();
+            this.adresse = (String) ois.readObject();
+            this.numSecu = (String) ois.readObject();
+            this.sexe = (char) ois.readObject();
+            this.anneeNaissance = (int) ois.readObject();
+            this.deptNaissance = (int) ois.readObject();
+            this.compte = (CompteBanque) ois.readObject();
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new IOException("Wrong stack format.");
+        }
+
+        ois.close();
+        fis.close();
     }
 
     public CompteBanque getCompte() {
@@ -137,5 +162,24 @@ public class Personne {
         int year = c.get(Calendar.YEAR);
 
         return year-this.anneeNaissance;
+    }
+
+    public void save() throws IOException {
+        File file = new File("out/" + this.prenom + "_" + this.nom + ".personne");
+        FileOutputStream fos = new FileOutputStream(file);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(this.nom);
+        oos.writeObject(this.prenom);
+        oos.writeObject(this.adresse);
+        oos.writeObject(this.numSecu);
+        oos.writeObject(this.sexe);
+        oos.writeObject(this.anneeNaissance);
+        oos.writeObject(this.deptNaissance);
+        oos.writeObject(this.compte);
+
+        oos.flush();
+        oos.close();
+        fos.close();
     }
 }
