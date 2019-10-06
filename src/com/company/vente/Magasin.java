@@ -71,9 +71,11 @@ public class Magasin {
         if(!stocks.containsKey(art)){
             throw new AchatException("Cet article n'est pas disponible");
         }
-
         if (personne.calculAge() <= 10) {
             throw new AchatException("Une personne de moins de 10 ans ne peut pas faire d'achat");
+        }
+        if (art instanceof Alcool && personne.calculAge() < 18) {
+            throw new AchatException("Une personne de moins de 18 ans ne peut pas acheter d'alcool");
         }
 
         int stock = stocks.get(art);
