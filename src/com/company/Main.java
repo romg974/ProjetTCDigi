@@ -55,6 +55,9 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println(compte);
+
+
         Ticket ticket = null;
         try {
             ticket = magasin.achete(ens, p0, "1234");
@@ -62,9 +65,23 @@ public class Main {
             e.printStackTrace();
         }
 
+        System.out.println(compte);
         System.out.println(ticket);
 
+        try {
+            assert ticket != null;
+            magasin.rembourse(ticket);
+        } catch (RembourseException e) {
+            e.printStackTrace();
+        }
 
+        System.out.println(compte);
+
+        try {
+            magasin.rembourse(ticket);
+        } catch (RembourseException e) {
+            e.printStackTrace();
+        }
 
     }
 }

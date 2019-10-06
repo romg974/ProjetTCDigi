@@ -1,6 +1,9 @@
 package com.company.compteBancaire;
 
 import com.company.personnes.Personne;
+import com.company.vente.Magasin;
+import com.company.vente.Ticket;
+
 import java.security.InvalidParameterException;
 
 public class CompteBanque {
@@ -63,6 +66,13 @@ public class CompteBanque {
             throw new CodeInvalideException();
 
         this.decouvertAutorise = newDecouvertAutorise;
+    }
+
+    public void rembourseTransaction(Magasin magasin, Ticket ticket) throws Exception {
+        if(!magasin.verifieVente(ticket))
+            throw new Exception("Cette vente n'est pas vérifiée par le magasin");
+
+        this.solde += ticket.getMontant();
     }
 
     public void versement(float somme, String code) throws Exception {

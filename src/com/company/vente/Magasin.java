@@ -57,6 +57,10 @@ public class Magasin {
         stocks.put(art, nb);
     }
 
+    public boolean verifieVente(Ticket ticket){
+        return ventes.contains(ticket);
+    }
+
     @Override
     public String toString() {
         return "Magasin{" +
@@ -93,10 +97,28 @@ public class Magasin {
             throw new AchatException(e.getMessage());
         }
 
-        Ticket ticket = new Ticket(this, personne, art, 10);
+        Ticket ticket = new Ticket(this, personne, art, prix);
         stocks.put(art, stock-1);
         ventes.add(ticket);
 
         return ticket;
+    }
+
+    public void rembourse(Ticket ticket) throws RembourseException {
+        if(ticket.getMagasin() != this)
+            throw new RembourseException("Ce n'est pas le bon magasin !");
+
+        if(!ventes.contains(ticket))
+            throw new RembourseException("Le remboursement est impossible ! Le ticket est faux !");
+
+        CompteBanque compte = ticket.getPersonne().getCompte();
+        try {
+            compte.rembourseTransaction(this, ticket);
+        } catch (Exception e) {
+            // Ceci ne peut normalement pas arriver
+        }
+
+        ventes.remove(ticket);
+        stocks.put(ticket.getArticle(), stocks.get(ticket.getArticle())+1);
     }
 }
